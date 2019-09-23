@@ -1,0 +1,10 @@
+{
+  "extends": ["tslint-config-airbnb", "tslint-react-hooks"],
+  "rules": {
+    "import-name": [false],
+    "variable-name": {
+      "options": ["allow-pascal-case"]
+    },
+    "react-hooks-nesting": "error"
+  }
+}
