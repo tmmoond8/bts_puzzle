@@ -1,9 +1,8 @@
-import Sample from '../components/Sample';
 
 const Index = () => (
   <div>
-    <Sample text="Hello Next.js"/>
+    juest
   </div>
-)
+);
 
-export default Index
+export default Index;
