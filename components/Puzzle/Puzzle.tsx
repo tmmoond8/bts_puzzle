@@ -29,13 +29,14 @@ const StyledPuzzle = styled.ul`
 
 const Puzzle = (props: IProps) => {
   const { img } = props;
-  const pieces = new Array(12).fill('_');
+  const pieces = new Array(10).fill('_');
   const row = 3;
   const column = 4;
   return (
     <Wrapper>
       <StyledPuzzle>
         {pieces.map((_, idx) => <PuzzleSliding img={img} row={row} column={column} index={idx} x={idx % row} y={Math.floor(idx / row)}/>)}
+        <PuzzleSliding img={img} row={row} column={column} index={10} x={10 % row} y={Math.floor(10 / row)}/>
       </StyledPuzzle>
       <img src={img} style={{ width: '300px', height: '400px', objectFit: 'cover',
         objectPosition: 'center'}}/>
