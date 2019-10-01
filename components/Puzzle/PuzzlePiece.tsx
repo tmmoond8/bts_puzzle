@@ -11,11 +11,11 @@ const StyledPuzzlePiece = withProps<IPuzzlePiece, HTMLImageElement>(styled.img)`
 `;
 
 const PuzzlePiece = (props: IPuzzlePiece) => {
-  const { img, row, column, index } = props;
-  const x = index % row;
-  const y = Math.floor(index / row);
+  const { img, row, column, number } = props;
+  const x = number % row;
+  const y = Math.floor(number / row);
   return (
-    <StyledPuzzlePiece src={img} x={x} y={y} row={row} column={column}/>
+    number !== -1 && <StyledPuzzlePiece src={img} x={x} y={y} row={row} column={column}/>
   );
 };
 

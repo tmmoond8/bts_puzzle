@@ -1,20 +1,24 @@
+
+import React, { useState } from 'react';
 import styled from '../../styles/themed-components';
 import PuzzleSliding from './PuzzleSliding';
 
 interface IProps {
   img: string;
+  puzzle: number[];
+  row: number;
 }
 
 export interface IPuzzlePiece {
   img: string;
+  number: number;
   row: number;
   column: number;
-  index: number;
 }
 
 export interface IPuzzleSliding extends IPuzzlePiece{
-  x: number;
-  y: number;
+  current: number;
+  prev?: number;
 }
 
 const Wrapper = styled.div`
@@ -25,21 +29,27 @@ const StyledPuzzle = styled.ul`
   position: relative;
   width: 300px;
   height: 400px;
+  user-select: none;
 `;
 
 const Puzzle = (props: IProps) => {
-  const { img } = props;
-  const pieces = new Array(10).fill('_');
-  const row = 3;
-  const column = 4;
+  const { img, puzzle, row } = props;
+  const [idx, setIdx] = useState(10);
+  const column = Math.ceil(puzzle.length / row);
+  const [timer, setTimer] = useState(-1);
+  const handleClick = () => {
+    if (timer > 0) return;
+    setIdx(idx + 1);
+    setTimer(setTimeout(() => {
+      setTimer(-1);
+    },                  500));
+  };
   return (
     <Wrapper>
-      <StyledPuzzle>
-        {pieces.map((_, idx) => <PuzzleSliding img={img} row={row} column={column} index={idx} x={idx % row} y={Math.floor(idx / row)}/>)}
-        <PuzzleSliding img={img} row={row} column={column} index={10} x={10 % row} y={Math.floor(10 / row)}/>
+      <StyledPuzzle onClick={handleClick}>
+        {puzzle.map((number, idx) => <PuzzleSliding img={img} row={row} column={column} number={number} current={idx} />)}
+        <PuzzleSliding img={img} row={row} column={column} number={10} current={idx}/>
       </StyledPuzzle>
-      <img src={img} style={{ width: '300px', height: '400px', objectFit: 'cover',
-        objectPosition: 'center'}}/>
     </Wrapper>
   );
 };
