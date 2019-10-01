@@ -5,8 +5,8 @@ import { IPuzzleSliding } from './Puzzle';
 
 const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
   position: absolute;
-  width: ${props => 100 / props.row}%;
-  height: ${props => 100 / props.column}%;
+  width: ${props => 100 / props.columns}%;
+  height: ${props => 100 / props.rows}%;
   overflow: hidden;
   left: 0;
   top: 0;
@@ -17,9 +17,9 @@ const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
 
 const PuzzleSliding = (props: IPuzzleSliding) => {
 
-  const { row, column, number, img, current } = props;
-  const x = current % row;
-  const y = Math.floor(current / row);
+  const { columns, rows, number, img, current } = props;
+  const x = current % columns;
+  const y = Math.floor(current / columns);
   const [prevX, setPrevX] = useState(x);
   const [prevY, setPrevY] = useState(y);
 
@@ -40,8 +40,8 @@ const PuzzleSliding = (props: IPuzzleSliding) => {
     }
   `;
   return (
-    <StyledPuzzleSliding key={number} x={x} y={y} row={row} column={column} move={move}>
-      <PuzzlePiece img={img} row={row} column={column} number={number}/>
+    <StyledPuzzleSliding key={number} x={x} y={y} columns={columns} rows={rows} move={move}>
+      <PuzzlePiece img={img} columns={columns} rows={rows} number={number}/>
     </StyledPuzzleSliding>
   );
 };
