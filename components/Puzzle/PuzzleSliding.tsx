@@ -5,8 +5,8 @@ import { IPuzzleSliding } from './Puzzle';
 
 const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
   position: absolute;
-  width: ${props => 100 / props.row}%;
-  height: ${props => 100 / props.column}%;
+  width: ${props => 100 / props.columns}%;
+  height: ${props => 100 / props.rows}%;
   overflow: hidden;
   left: 0;
   top: 0;
@@ -16,10 +16,10 @@ const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
 // transform: translate(${props =>  props.x * 100}%, ${props => props.y * 100}%) scale(0.99);
 
 const PuzzleSliding = (props: IPuzzleSliding) => {
-<<<<<<< HEAD
-  const { row, column, number, img, current } = props;
-  const x = current % row;
-  const y = Math.floor(current / row);
+
+  const { columns, rows, number, img, current } = props;
+  const x = current % columns;
+  const y = Math.floor(current / columns);
   const [prevX, setPrevX] = useState(x);
   const [prevY, setPrevY] = useState(y);
 
@@ -27,14 +27,9 @@ const PuzzleSliding = (props: IPuzzleSliding) => {
     const timer = setTimeout(() => {
       setPrevX(x);
       setPrevY(y);
-    },                                                    500);
-           return () => clearTimeout(timer);
-  }, [x, y]);
-=======
-  const { row, column, index, img, x, y, prevX= x, prevY= y } = props;
-  const [preTimeout, setPrevTimeout] = useState(undefined);
-  let timeoutCallback;
->>>>>>> 5a8269b0d1d7219364bbd438788653fbe0827431
+    },                       500);
+    return () => clearTimeout(timer);
+  },        [x, y]);
 
   const move = keyframes`
     0% {
@@ -45,8 +40,8 @@ const PuzzleSliding = (props: IPuzzleSliding) => {
     }
   `;
   return (
-    <StyledPuzzleSliding key={number} x={x} y={y} row={row} column={column} move={move}>
-      <PuzzlePiece img={img} row={row} column={column} number={number}/>
+    <StyledPuzzleSliding key={number} x={x} y={y} columns={columns} rows={rows} move={move}>
+      <PuzzlePiece img={img} columns={columns} rows={rows} number={number}/>
     </StyledPuzzleSliding>
   );
 };
