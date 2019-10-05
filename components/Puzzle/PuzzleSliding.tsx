@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import styled, { withProps, keyframes } from '../../styles/themed-components';
+import React from 'react';
+import styled, { withProps, keyframes, css } from '../../styles/themed-components';
 import PuzzlePiece from './PuzzlePiece';
 import { IPuzzleSliding } from './Puzzle';
 
@@ -10,27 +10,15 @@ const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
   overflow: hidden;
   left: 0;
   top: 0;
-  animation: ${props => props.move} .5s ease forwards;
+  ${({ move }) => move};
   border-radius: 6px;
 `;
-// transform: translate(${props =>  props.x * 100}%, ${props => props.y * 100}%) scale(0.99);
 
-const PuzzleSliding = (props: IPuzzleSliding) => {
-
-  const { columns, rows, number, img, current, handleClickPuzzle } = props;
+const moveKeyFrames = ({ current, prev, columns }) => {
   const x = current % columns;
   const y = Math.floor(current / columns);
-  const [prevX, setPrevX] = useState(x);
-  const [prevY, setPrevY] = useState(y);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setPrevX(x);
-      setPrevY(y);
-    },                       500);
-    return () => clearTimeout(timer);
-  },        [x, y]);
-
+  const prevX = prev % columns;
+  const prevY = Math.floor(prev / columns);
   const move = keyframes`
     0% {
       transform: translate(${(prevX) * 100}%, ${prevY * 100}%) scale(0.99);
@@ -39,8 +27,18 @@ const PuzzleSliding = (props: IPuzzleSliding) => {
       transform: translate(${x * 100}%, ${y * 100}%) scale(0.99);
     }
   `;
+  return prev === current
+    ? css`transform: translate(${x * 100}%, ${y * 100}%) scale(0.99)`
+    : css`animation: ${move} .5s ease forwards`;
+};
+
+const PuzzleSliding = (props: IPuzzleSliding) => {
+
+  const { columns, rows, number, img, handleClickPuzzle } = props;
+  const move = moveKeyFrames(props);
+
   return (
-    <StyledPuzzleSliding key={number} x={x} y={y} columns={columns} rows={rows} move={move} onClick={handleClickPuzzle}>
+    <StyledPuzzleSliding key={number} columns={columns} rows={rows} move={move} onClick={handleClickPuzzle}>
       <PuzzlePiece img={img} columns={columns} rows={rows} number={number}/>
     </StyledPuzzleSliding>
   );
