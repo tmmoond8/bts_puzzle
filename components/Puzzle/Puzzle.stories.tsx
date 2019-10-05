@@ -15,9 +15,15 @@ storiesOf('Puzzle', module)
       0, 1, 2,
       3, 4, 5,
       6, 7, 8,
-      9,
+      9, 10, -1,
     ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle}/>;
+    const prevPuzzle = [
+      0, 1, 2,
+      3, 4, 5,
+      6, 7, 8,
+      9, -1, 10,
+    ];
+    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={prevPuzzle}/>;
   }).add('Puzzle 2', () => {
     const puzzle = [
       3, 4, 5,
@@ -25,7 +31,7 @@ storiesOf('Puzzle', module)
       6, 7, 8,
       9, 10, -1,
     ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle}/>;
+    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={puzzle}/>;
   }).add('Puzzle 3', () => {
     const puzzle = [
       3, 4, 5,
@@ -33,5 +39,5 @@ storiesOf('Puzzle', module)
       6, 7, 8,
       9, 10, -1,
     ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle}/>;
+    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={puzzle}/>;
   });

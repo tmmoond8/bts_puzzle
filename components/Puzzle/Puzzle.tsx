@@ -7,6 +7,7 @@ interface IProps {
   puzzle: number[];
   columns: number;
   handleClickPuzzle: (point: number) => void;
+  prevPuzzle: number[];
 }
 
 export interface IPuzzlePiece {
@@ -18,7 +19,7 @@ export interface IPuzzlePiece {
 
 export interface IPuzzleSliding extends IPuzzlePiece{
   current: number;
-  prev?: number;
+  prev: number;
   handleClickPuzzle: () => void;
 }
 
@@ -31,23 +32,28 @@ const StyledPuzzle = styled.ul`
   width: 300px;
   height: 400px;
   user-select: none;
+  ${({ theme }) => theme.media.phone`
+    width: 100vw;
+    height: 133.3vw;
+  `}
 `;
 
 const Puzzle = (props: IProps) => {
-  const { img, puzzle, columns, handleClickPuzzle } = props;
+  const { img, puzzle, prevPuzzle, columns, handleClickPuzzle } = props;
   const rows = Math.ceil(puzzle.length / columns);
-  const [timer, setTimer] = useState(-1);
-  const handleClick = (point: number) => {
-    if (timer > 0) return;
-    handleClickPuzzle(point);
-    setTimer(setTimeout(() => {
-      setTimer(-1);
-    },                  500));
-  };
   return (
     <Wrapper>
       <StyledPuzzle>
-        {puzzle.map((number, idx) => <PuzzleSliding img={img} columns={columns} rows={rows} number={number} current={idx} handleClickPuzzle={() => handleClick(idx)}/>)}
+        {puzzle.map((number, idx) => (
+          <PuzzleSliding
+            img={img}
+            columns={columns}
+            rows={rows}
+            number={number}
+            current={idx}
+            prev={prevPuzzle.findIndex(item => item === number)}
+            handleClickPuzzle={() => handleClickPuzzle(idx)}/>
+        ))}
       </StyledPuzzle>
     </Wrapper>
   );

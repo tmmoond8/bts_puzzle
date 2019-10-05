@@ -8,6 +8,11 @@ const StyledPuzzlePiece = withProps<IPuzzlePiece, HTMLImageElement>(styled.img)`
   width: 300px;
   transform: translate(-${props => props.x * SIZE}px, -${props => props.y * SIZE}px);
   object-fit: cover;
+  ${({ theme }) => theme.media.phone`
+    width: 100vw;
+    height: 133.3vw;
+    transform: translate(-${props => props.x * 33.3}vw, -${props => props.y * 33.3}vw);
+  `}
 `;
 
 const PuzzlePiece = (props: IPuzzlePiece) => {
