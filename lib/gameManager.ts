@@ -7,29 +7,53 @@ class Position {
   }
 }
 
-const switcherY = (puzzles, x, from , to) => {
-  for (let i = from; i < to; i++) {
-    const tmp = puzzles[x +];
+const switcherY = (puzzles, columns, from , to) => {
+  const moved = [...puzzles];
+  if (from < to) {
+    for (let i = from; i < to; i += columns) {
+      moved[i] = moved[i + columns];
+    }
+  } else {
+    for (let i = from; i > to; i -= columns) {
+      moved[i] = moved[i - columns];
+    }
   }
+  moved[to] = -1;
+  return moved;
+};
+
+const switcherX = (puzzles, from , to) => {
+  const moved = [...puzzles];
+  if (from < to) {
+    for (let i = from; i < to; i++) {
+      moved[i] = moved[i + 1];
+    }
+  } else {
+    for (let i = from; i > to; i--) {
+      moved[i] = moved[i - 1];
+    }
+  }
+  moved[to] = -1;
+  return moved;
 };
 
 export const move = (puzzles, columns, pointIdx) => {
   if (pointIdx >= puzzles.length || puzzles[pointIdx] === -1) {
-    return puzzles.join('');
+    return puzzles;
   }
   const emptyIdx = puzzles.findIndex(p => p === -1);
   const empty = new Position(emptyIdx, columns);
   const point = new Position(pointIdx, columns);
-  const moved = [...puzzles];
-  if (empty.x === point.x) {
-    if (empty.y < point.y) {
-
-    }
-  }
 
   if (empty.x !== point.x && empty.y !== point.y) {
-    return puzzles.join('');
+    return puzzles;
   }
 
-  return puzzles.join('');
+  let moved = [];
+  if (empty.x === point.x) {
+    moved = switcherY(puzzles, columns, emptyIdx, pointIdx);
+    return moved;
+  }
+  moved = switcherX(puzzles, emptyIdx, pointIdx);
+  return moved;
 };

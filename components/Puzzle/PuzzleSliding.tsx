@@ -17,7 +17,7 @@ const StyledPuzzleSliding = withProps<IPuzzleSliding, HTMLLIElement>(styled.li)`
 
 const PuzzleSliding = (props: IPuzzleSliding) => {
 
-  const { columns, rows, number, img, current } = props;
+  const { columns, rows, number, img, current, handleClickPuzzle } = props;
   const x = current % columns;
   const y = Math.floor(current / columns);
   const [prevX, setPrevX] = useState(x);
@@ -40,7 +40,7 @@ const PuzzleSliding = (props: IPuzzleSliding) => {
     }
   `;
   return (
-    <StyledPuzzleSliding key={number} x={x} y={y} columns={columns} rows={rows} move={move}>
+    <StyledPuzzleSliding key={number} x={x} y={y} columns={columns} rows={rows} move={move} onClick={handleClickPuzzle}>
       <PuzzlePiece img={img} columns={columns} rows={rows} number={number}/>
     </StyledPuzzleSliding>
   );

@@ -1,1 +1,1 @@
-export { default } from './Puzzle';
+export { default } from './PuzzleContainer';
