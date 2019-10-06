@@ -4,13 +4,31 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import PuzzlePiece from  './PuzzlePiece';
 import Puzzle from  './Puzzle';
+import GameOver from '../Game/GameOver';
 
 const handleClickPuzzle = action('click puzzle');
 
 storiesOf('Puzzle', module)
   .add('PuzzlePiece', () => (
     <PuzzlePiece img="https://i.imgur.com/7bNfhgP.jpg" columns={3} rows={4} number={0}/>
-  )).add('Puzzle 1', () => {
+  )).add('Puzzle : view', () => {
+    const puzzle = [
+      3, 4, 5,
+      0, 1, 2,
+      6, 7, 8,
+      9, 10, -1,
+    ];
+    return (
+      <Puzzle
+        img="https://i.imgur.com/7bNfhgP.jpg"
+        puzzle={puzzle}
+        columns={3}
+        handleClickPuzzle={handleClickPuzzle}
+        prevPuzzle={puzzle}
+        gameStatus="playing"
+      />
+    );
+  }).add('Puzzle : move animation', () => {
     const puzzle = [
       0, 1, 2,
       3, 4, 5,
@@ -23,21 +41,34 @@ storiesOf('Puzzle', module)
       6, 7, 8,
       9, -1, 10,
     ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={prevPuzzle}/>;
-  }).add('Puzzle 2', () => {
+    return (
+      <Puzzle
+        img="https://i.imgur.com/7bNfhgP.jpg"
+        puzzle={puzzle}
+        columns={3}
+        handleClickPuzzle={handleClickPuzzle}
+        prevPuzzle={prevPuzzle}
+        gameStatus="playing"
+      />
+    );
+  }).add('Puzzle : game over', () => {
     const puzzle = [
       3, 4, 5,
       0, 1, 2,
       6, 7, 8,
       9, 10, -1,
     ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={puzzle}/>;
-  }).add('Puzzle 3', () => {
-    const puzzle = [
-      3, 4, 5,
-      0, 1, 2,
-      6, 7, 8,
-      9, 10, -1,
-    ];
-    return <Puzzle img="https://i.imgur.com/7bNfhgP.jpg" puzzle={puzzle} columns={3} handleClickPuzzle={handleClickPuzzle} prevPuzzle={puzzle}/>;
+    return (
+      <div style={{ position: 'relative' }}>
+        <Puzzle
+          img="https://i.imgur.com/7bNfhgP.jpg"
+          puzzle={puzzle}
+          columns={3}
+          handleClickPuzzle={handleClickPuzzle}
+          prevPuzzle={puzzle}
+          gameStatus="over"
+        />
+        <GameOver/>
+      </div>
+    );
   });

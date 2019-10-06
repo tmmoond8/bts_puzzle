@@ -15,6 +15,7 @@ height: 100vh;
   width: 299px;
   height: 626px;
   margin: 0 auto;
+  background-color: black;
   &::before {
     content: "";
     position: absolute;

@@ -31,6 +31,7 @@ const GlobalStyle = createGlobalStyle`
   @media only screen and (max-width: 576px) {
     body {
       font-size: 10px;
+      background-color: black;
     }
   }
 `;

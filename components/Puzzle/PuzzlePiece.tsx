@@ -1,5 +1,5 @@
 import styled, { withProps } from '../../styles/themed-components';
-import { IPuzzlePiece } from './Puzzle';
+import { IPuzzlePiece } from '../Puzzle';
 
 const SIZE = 100;
 
