@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
 import styled from '../../styles/themed-components';
 import PuzzleSliding from './PuzzleSliding';
+import { IContext } from '../Game';
 
-interface IProps {
+interface IProps extends IContext{
   img: string;
-  puzzle: number[];
+  puzzle?: number[];
   columns: number;
   handleClickPuzzle: (point: number) => void;
   prevPuzzle: number[];
 }
 
-export interface IPuzzlePiece {
-  img: string;
-  number: number;
-  columns: number;
-  rows: number;
-}
-
-export interface IPuzzleSliding extends IPuzzlePiece{
-  current: number;
-  prev: number;
-  handleClickPuzzle: () => void;
-}
-
 const Wrapper = styled.div`
   display: flex;
+  background-color: white;
 `;
 
 const StyledPuzzle = styled.ul`
@@ -39,7 +28,7 @@ const StyledPuzzle = styled.ul`
 `;
 
 const Puzzle = (props: IProps) => {
-  const { img, puzzle, prevPuzzle, columns, handleClickPuzzle } = props;
+  const { img, puzzle, prevPuzzle, columns, handleClickPuzzle, gameStatus } = props;
   const rows = Math.ceil(puzzle.length / columns);
   return (
     <Wrapper>
@@ -52,7 +41,9 @@ const Puzzle = (props: IProps) => {
             number={number}
             current={idx}
             prev={prevPuzzle.findIndex(item => item === number)}
-            handleClickPuzzle={() => handleClickPuzzle(idx)}/>
+            handleClickPuzzle={() => handleClickPuzzle(idx)}
+            gameStatus={gameStatus}
+          />
         ))}
       </StyledPuzzle>
     </Wrapper>
