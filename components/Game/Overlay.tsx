@@ -17,6 +17,7 @@ const StyledOverlay = styled.div`
     width: 100vw;
     height: 133.3vw;
   `}
+  z-index: 100;
 `;
 
 const Overlay = (props: IProps) => {

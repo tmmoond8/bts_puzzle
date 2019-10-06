@@ -13,6 +13,7 @@ const StyledGameReady = styled.div`
   background-image: linear-gradient(to bottom, rgba(0,0,0, 0.5), rgba(0,0,0, 0.4), rgba(0,0,0, 0.4), rgba(0,0,0,0.3));
   & > * {
     position: absolute;
+    z-index: 10;
   }
 
   & > h2 {
@@ -32,18 +33,27 @@ const StyledGameReady = styled.div`
   }
 
   & > img {
+    @keyframes focus {
+      from {
+        filter: blur(4px);
+      }
+      to {
+        filter: none;
+      }
+    }
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
+    animation: focus .5s;
   }
 `;
 
 const GameReady = (props: IProps) => {
   const { img, gameStart } = props;
-  const [count, setCount] = useState(3);
+  const [count, setCount] = useState(5);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (count === 1) return gameStart();

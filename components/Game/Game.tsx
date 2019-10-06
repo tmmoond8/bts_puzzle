@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import styled from '../../styles/themed-components';
-import Puzzle from '../Puzzle/Puzzle';
+import Puzzle from '../Puzzle';
 import GameOver from './GameOver';
+import GameClear from './GameClear';
 import GameHome from './GameHome';
 import GameReady from './GameReady';
-import { IContext } from '../Game';
+import { GameStatus } from '../Game';
+import { createPuzzle } from '../../lib/gameManager';
 
 interface IProps {
   img: string;
@@ -25,25 +27,33 @@ const StyledGame = styled.div`
 
 const Overlay = (props: {
   gameStatus,
-  setGameStatus: (status: IContext['gameStatus']) => void,
+  setGameStatus: (status: GameStatus) => void,
   img: string,
+  setNewPuzzle: () => void,
 }) => {
-  const { gameStatus, setGameStatus, img } = props;
+  const { gameStatus, setGameStatus, img, setNewPuzzle } = props;
   if (gameStatus === 'join')  {
     return <GameHome img={img} gameReady={() => setGameStatus('ready')}/>;
   }
   if (gameStatus === 'ready') {
-    return <GameReady img={img} gameStart={() => setGameStatus('playing')}/>;
+    return <GameReady img={img} gameStart={() => (setGameStatus('playing'), setNewPuzzle())}/>;
   }
   if (gameStatus === 'over') {
-    return <GameOver/>;
+    return <GameOver gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
+  }
+  if (gameStatus === 'clear') {
+    return <GameClear gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
   }
   return null;
 };
 
 const Game = (props: IProps) => {
   const { img } = props;
+  const columns = 3;
   const [gameStatus, setGameStatus] = useState('join');
+  const [puzzle, setPuzzle] = useState([]);
+  const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows: 4 }));
+
   return (
     <StyledGame>
       <section>
@@ -51,6 +61,14 @@ const Game = (props: IProps) => {
           gameStatus={gameStatus}
           setGameStatus={setGameStatus}
           img={img}
+          setNewPuzzle={setNewPuzzle}
+        />
+        <Puzzle
+          img={img}
+          columns={columns}
+          puzzle={puzzle}
+          gameStatus={gameStatus as any}
+          gameClear={() => setGameStatus('clear')}
         />
       </section>
     </StyledGame>

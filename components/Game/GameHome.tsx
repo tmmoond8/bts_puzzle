@@ -11,7 +11,8 @@ const StyledGameHome = withProps<IProps, HTMLDivElement>(styled.div)`
   position: relative;
   width: 100%;
   height: 100%;
-
+  background-color: black;
+  
   @keyframes pop {
     0% {
       transform: scale(1);
@@ -28,6 +29,7 @@ const StyledGameHome = withProps<IProps, HTMLDivElement>(styled.div)`
 
   & > * {
     position: absolute;
+    z-index: 10;
   }
 
   & > h2 {
@@ -63,7 +65,7 @@ const StyledGameHome = withProps<IProps, HTMLDivElement>(styled.div)`
     height: 100%;
     filter: blur(4px);
     object-fit: cover;
-    z-index: -1;
+    z-index: 0;
   }
 `;
 

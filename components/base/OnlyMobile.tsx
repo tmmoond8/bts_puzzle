@@ -16,6 +16,8 @@ height: 100vh;
   height: 626px;
   margin: 0 auto;
   background-color: black;
+  border-radius: 0 0 1.5rem 1.5rem;
+  
   &::before {
     content: "";
     position: absolute;

@@ -43,7 +43,7 @@ export const move = (puzzles, columns, pointIdx) => {
   }
   const emptyIdx = puzzles.findIndex(p => p === -1);
   const empty = new Position(emptyIdx, columns);
-  const point = new Position(pointIdx, columns);
+  const point = new Position(pointIdx, columns); '';
 
   if (empty.x !== point.x && empty.y !== point.y) {
     return puzzles;
@@ -56,4 +56,14 @@ export const move = (puzzles, columns, pointIdx) => {
   }
   moved = switcherX(puzzles, emptyIdx, pointIdx);
   return moved;
+};
+
+export const createPuzzle = ({ columns, rows }) => {
+  const length = columns * rows;
+  // tslint:disable-next-line: prefer-array-literal
+  let puzzle = new Array(length).fill('_').map((_, idx) => idx === columns * rows - 1 ? -1 : idx);
+  for (let i = 0; i < 100; i++) {
+    puzzle = move(puzzle, columns, Math.floor(Math.random() * 232324 % length));
+  }
+  return puzzle;
 };

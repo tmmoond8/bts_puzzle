@@ -9,7 +9,7 @@ import { action } from '@storybook/addon-actions';
 
 storiesOf('Game', module)
   .add('GameOver', () => (
-    <GameOver/>
+    <GameOver gameReady={action('game ready')}/>
   )).add('GameReady', () => (
     <GameReady img="https://i.imgur.com/7bNfhgP.jpg" gameStart={action('game start')}/>
   )).add('GameHome', () => (

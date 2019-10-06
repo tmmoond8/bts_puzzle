@@ -5,7 +5,7 @@ import { IContext } from '../Game';
 
 interface IProps extends IContext{
   img: string;
-  puzzle: number[];
+  puzzle?: number[];
   columns: number;
   handleClickPuzzle: (point: number) => void;
   prevPuzzle: number[];

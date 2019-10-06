@@ -1,7 +1,5 @@
-import Game from './Game';
-export default Game;
-
+export { default } from './Game';
+export type GameStatus = 'join' | 'ready' | 'playing' | 'clear' | 'over';
 export interface IContext {
-  gameStatus: 'join' | 'ready' | 'playing' | 'clear' | 'over';
+  gameStatus: GameStatus;
 }
-
