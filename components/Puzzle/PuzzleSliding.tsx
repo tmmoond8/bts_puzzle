@@ -37,14 +37,14 @@ const keyframesAnimation = ({ current, prev, columns, gameStatus }) => {
 
   const move = keyframes`
     0% {
-      transform: translate(${(prevX) * 100}%, ${prevY * 100}%) scale(0.99);
+      transform: translate(${(prevX) * 100}%, ${prevY * 100}%);
     }
     100% {
-      transform: translate(${x * 100}%, ${y * 100}%) scale(0.99);
+      transform: translate(${x * 100}%, ${y * 100}%);
     }
   `;
   return prev === current
-    ? css`transform: translate(${x * 100}%, ${y * 100}%) scale(0.99)`
+    ? css`transform: translate(${x * 100}%, ${y * 100}%)`
     : css`animation: ${move} .5s ease forwards`;
 };
 

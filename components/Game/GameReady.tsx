@@ -53,7 +53,7 @@ const StyledGameReady = styled.div`
 
 const GameReady = (props: IProps) => {
   const { img, gameStart } = props;
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(1);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (count === 1) return gameStart();

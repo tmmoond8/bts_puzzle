@@ -6,12 +6,13 @@ import { IContext } from '../Game';
 interface IProps extends IContext {
   puzzle: number[];
   columns: number;
+  rows: number;
   img: string;
   gameClear: () => void;
 }
 
 const PuzzleContainer = (props: IProps) => {
-  const { puzzle: originPuzzle, columns, img, gameStatus, gameClear } = props;
+  const { puzzle: originPuzzle, columns, rows, img, gameStatus, gameClear } = props;
   const [puzzle, setPuzzle] = useState(originPuzzle);
   const [prevPuzzle, setPrevPuzzle] = useState(originPuzzle);
   const handlePuzzleClick = (point: number) => {
@@ -34,6 +35,7 @@ const PuzzleContainer = (props: IProps) => {
   return <Puzzle
     img ={ img }
     puzzle={puzzle}
+    rows={rows}
     columns={columns}
     handleClickPuzzle ={ handlePuzzleClick }
     prevPuzzle={prevPuzzle}

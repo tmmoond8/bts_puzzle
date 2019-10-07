@@ -10,6 +10,8 @@ import { createPuzzle } from '../../lib/gameManager';
 
 interface IProps {
   img: string;
+  columns: number;
+  rows: number;
 }
 
 const StyledGame = styled.div`
@@ -48,11 +50,10 @@ const Overlay = (props: {
 };
 
 const Game = (props: IProps) => {
-  const { img } = props;
-  const columns = 3;
+  const { img, columns, rows } = props;
   const [gameStatus, setGameStatus] = useState('join');
   const [puzzle, setPuzzle] = useState([]);
-  const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows: 4 }));
+  const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows }));
 
   return (
     <StyledGame>
@@ -66,6 +67,7 @@ const Game = (props: IProps) => {
         <Puzzle
           img={img}
           columns={columns}
+          rows={rows}
           puzzle={puzzle}
           gameStatus={gameStatus as any}
           gameClear={() => setGameStatus('clear')}

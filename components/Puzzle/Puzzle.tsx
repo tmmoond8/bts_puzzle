@@ -7,6 +7,7 @@ interface IProps extends IContext{
   img: string;
   puzzle?: number[];
   columns: number;
+  rows: number;
   handleClickPuzzle: (point: number) => void;
   prevPuzzle: number[];
 }
@@ -28,8 +29,7 @@ const StyledPuzzle = styled.ul`
 `;
 
 const Puzzle = (props: IProps) => {
-  const { img, puzzle, prevPuzzle, columns, handleClickPuzzle, gameStatus } = props;
-  const rows = Math.ceil(puzzle.length / columns);
+  const { img, puzzle, prevPuzzle, columns, rows, handleClickPuzzle, gameStatus } = props;
   return (
     <Wrapper>
       <StyledPuzzle>

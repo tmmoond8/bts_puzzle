@@ -62,8 +62,9 @@ export const createPuzzle = ({ columns, rows }) => {
   const length = columns * rows;
   // tslint:disable-next-line: prefer-array-literal
   let puzzle = new Array(length).fill('_').map((_, idx) => idx === columns * rows - 1 ? -1 : idx);
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 0; i++) {
     puzzle = move(puzzle, columns, Math.floor(Math.random() * 232324 % length));
   }
+  console.log(puzzle);
   return puzzle;
 };
