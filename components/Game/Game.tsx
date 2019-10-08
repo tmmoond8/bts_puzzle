@@ -7,6 +7,7 @@ import GameHome from './GameHome';
 import GameReady from './GameReady';
 import { GameStatus } from '../Game';
 import { createPuzzle } from '../../lib/gameManager';
+import Timer from '../Timer';
 
 interface IProps {
   img: string;
@@ -30,8 +31,9 @@ const Overlay = (props: {
   setGameStatus: (status: GameStatus) => void,
   img: string,
   setNewPuzzle: () => void,
+  time: number,
 }) => {
-  const { gameStatus, setGameStatus, img, setNewPuzzle } = props;
+  const { gameStatus, setGameStatus, img, setNewPuzzle, time } = props;
   if (gameStatus === 'join')  {
     return <GameHome img={img} gameReady={() => setGameStatus('ready')}/>;
   }
@@ -42,7 +44,7 @@ const Overlay = (props: {
     return <GameOver gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
   }
   if (gameStatus === 'clear') {
-    return <GameClear gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
+    return <GameClear time={time} gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
   }
   return null;
 };
@@ -52,6 +54,7 @@ const Game = (props: IProps) => {
   const columns = 3;
   const [gameStatus, setGameStatus] = useState('join');
   const [puzzle, setPuzzle] = useState([]);
+  const [time, setTime] = useState(60);
   const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows: 4 }));
 
   return (
@@ -62,6 +65,7 @@ const Game = (props: IProps) => {
           setGameStatus={setGameStatus}
           img={img}
           setNewPuzzle={setNewPuzzle}
+          time={time}
         />
         <Puzzle
           img={img}
@@ -71,6 +75,7 @@ const Game = (props: IProps) => {
           gameClear={() => setGameStatus('clear')}
         />
       </section>
+      {gameStatus === 'playing' && <Timer time={time} setTime={setTime} gameOver={() => setGameStatus('over')}/>}
     </StyledGame>
   );
 };
