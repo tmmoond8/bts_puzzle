@@ -12,7 +12,7 @@ const StyledGameHome = withProps<IProps, HTMLDivElement>(styled.div)`
   width: 100%;
   height: 100%;
   background-color: black;
-  
+
   @keyframes pop {
     0% {
       transform: scale(1);
@@ -75,13 +75,11 @@ const GameHome = (props: IProps) => {
     gameReady();
   },                                         300);
   return (
-    <Overlay>
-      <StyledGameHome>
-        <p>sliding puzzle game</p>
-        <h2 onClick={gameReadyAfter300}>Game Start</h2>
-        <img src={img}/>
-      </StyledGameHome>
-    </Overlay>
+    <StyledGameHome>
+      <p>sliding puzzle game</p>
+      <h2 onClick={gameReadyAfter300}>Game Start</h2>
+      <img src={img}/>
+    </StyledGameHome>
   );
 };
 
