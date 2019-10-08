@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from '../../styles/themed-components';
+import React from 'react';
+import styled, { withProps } from '../../styles/themed-components';
 import PuzzleSliding from './PuzzleSliding';
 import { IContext } from '../Game';
 
@@ -7,6 +7,7 @@ interface IProps extends IContext{
   img: string;
   puzzle?: number[];
   columns: number;
+  rows: number;
   handleClickPuzzle: (point: number) => void;
   prevPuzzle: number[];
 }
@@ -16,23 +17,16 @@ const Wrapper = styled.div`
   background-color: white;
 `;
 
-const StyledPuzzle = styled.ul`
+const StyledPuzzle = withProps<any, HTMLUListElement>(styled.ul)`
   position: relative;
-  width: 300px;
-  height: 400px;
-  user-select: none;
-  ${({ theme }) => theme.media.phone`
-    width: 100vw;
-    height: 133.3vw;
-  `}
+  ${({ theme, rows, columns }) => theme.puzzleSize(columns, rows)};
 `;
 
 const Puzzle = (props: IProps) => {
-  const { img, puzzle, prevPuzzle, columns, handleClickPuzzle, gameStatus } = props;
-  const rows = Math.ceil(puzzle.length / columns);
+  const { img, puzzle, prevPuzzle, columns, rows, handleClickPuzzle, gameStatus } = props;
   return (
     <Wrapper>
-      <StyledPuzzle>
+      <StyledPuzzle columns={columns} rows={rows}>
         {puzzle.map((number, idx) => (
           <PuzzleSliding
             img={img}

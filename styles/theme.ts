@@ -32,6 +32,15 @@ const color = {
 const theme = {
   color,
   media,
+  puzzleSize: ( columns, rows) => css`
+    width: 300px;
+    height: ${300 / columns * rows}px;
+    user-select: none;
+    ${({ theme }) => theme.media.phone`
+      width: 100vw;
+      height: 133.3vw;
+    `}
+  `,
 };
 
 export type Theme = typeof theme;

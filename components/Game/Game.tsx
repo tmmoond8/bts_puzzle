@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled from '../../styles/themed-components';
+import styled, { withProps } from '../../styles/themed-components';
 import Puzzle from '../Puzzle';
 import GameOver from './GameOver';
 import GameClear from './GameClear';
@@ -8,25 +8,22 @@ import GameReady from './GameReady';
 import { GameStatus } from '../Game';
 import { createPuzzle } from '../../lib/gameManager';
 import Timer from '../Timer';
+import Overlay from './Overlay';
 
 interface IProps {
   img: string;
+  columns: number;
+  rows: number;
 }
 
-const StyledGame = styled.div`
-  width: 300px;
-  height: 400px;
-  user-select: none;
-  ${({ theme }) => theme.media.phone`
-    width: 100vw;
-    height: 133.3vw;
-  `}
+const StyledGame = withProps<any, HTMLDivElement>(styled.div)`
+  ${({ theme, rows, columns }) => theme.puzzleSize(columns, rows)};
   section {
     position: relative;
   }
 `;
 
-const Overlay = (props: {
+const OverlayContents = (props: {
   gameStatus,
   setGameStatus: (status: GameStatus) => void,
   img: string,
@@ -50,26 +47,30 @@ const Overlay = (props: {
 };
 
 const Game = (props: IProps) => {
-  const { img } = props;
-  const columns = 3;
+  const { img, columns, rows } = props;
   const [gameStatus, setGameStatus] = useState('join');
   const [puzzle, setPuzzle] = useState([]);
   const [time, setTime] = useState(60);
-  const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows: 4 }));
+  const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows }));
 
   return (
-    <StyledGame>
+    <StyledGame columns={columns} rows={rows}>
       <section>
-        <Overlay
-          gameStatus={gameStatus}
-          setGameStatus={setGameStatus}
-          img={img}
-          setNewPuzzle={setNewPuzzle}
-          time={time}
-        />
+        {gameStatus !== 'playing'&& (
+          <Overlay columns={columns} rows={rows}>
+            <OverlayContents
+              gameStatus={gameStatus}
+              setGameStatus={setGameStatus}
+              img={img}
+              setNewPuzzle={setNewPuzzle}
+              time={time}
+            />
+          </Overlay>
+        )} 
         <Puzzle
           img={img}
           columns={columns}
+          rows={rows}
           puzzle={puzzle}
           gameStatus={gameStatus as any}
           gameClear={() => setGameStatus('clear')}
