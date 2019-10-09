@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { withProps } from '../../styles/themed-components';
 import Puzzle from '../Puzzle';
 import GameOver from './GameOver';
@@ -50,13 +50,14 @@ const Game = (props: IProps) => {
   const { img, columns, rows } = props;
   const [gameStatus, setGameStatus] = useState('join');
   const [puzzle, setPuzzle] = useState([]);
-  const [time, setTime] = useState(60);
+  const [time, setTime] = useState(0);
+  const startTime = new Date().getTime();
   const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows }));
 
   return (
     <StyledGame columns={columns} rows={rows}>
       <section>
-        {gameStatus !== 'playing'&& (
+        {gameStatus !== 'playing' && (
           <Overlay columns={columns} rows={rows}>
             <OverlayContents
               gameStatus={gameStatus}
@@ -66,7 +67,7 @@ const Game = (props: IProps) => {
               time={time}
             />
           </Overlay>
-        )} 
+        )}
         <Puzzle
           img={img}
           columns={columns}

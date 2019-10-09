@@ -3,8 +3,8 @@ import styled from '../../styles/themed-components';
 
 interface IProps {
   gameOver: () => void;
-  time: number;
   setTime: (time: number) => void;
+  time: number;
 }
 
 const StyledTimer = styled.div`
@@ -15,17 +15,26 @@ const StyledTimer = styled.div`
 
 const Timer = (props: IProps) => {
   const { gameOver, time, setTime } = props;
+  const TIME_LIMIT = 60000;
+  const [_time, _setTime] = useState(0);
+  const [startTime, _] = useState(new Date().getTime());
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (Math.round(time) === 0) return gameOver();
-      setTime(time - 0.01);
+      const currentTime = new Date().getTime();
+      const pastTime = currentTime - startTime;
+      if (pastTime > 60000) {
+        gameOver();
+      }
+      setTime(pastTime);
+      _setTime(pastTime);
     },                       10);
     return () => clearTimeout(timer);
-  },        [time]);
+  },        [_time]);
 
   return (
     <StyledTimer>
-      Time remaining : {time.toFixed(2)}
+      Time remaining : {((TIME_LIMIT - time) / 1000).toFixed(2)}
     </StyledTimer>
   );
 };
