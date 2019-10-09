@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../../styles/themed-components';
+import styled from '../../../styles/themed-components';
 
 interface IProps {
   children: React.ReactNode;
