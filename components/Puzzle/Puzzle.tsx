@@ -37,6 +37,7 @@ const Puzzle = (props: IProps) => {
             prev={prevPuzzle.findIndex(item => item === number)}
             handleClickPuzzle={() => handleClickPuzzle(idx)}
             gameStatus={gameStatus}
+            key={`${img}${idx}`}
           />
         ))}
       </StyledPuzzle>

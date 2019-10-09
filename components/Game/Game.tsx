@@ -11,9 +11,8 @@ import Timer from '../Timer';
 import Overlay from './Overlay';
 
 interface IProps {
-  img: string;
-  columns: number;
-  rows: number;
+  games: any[];
+  step: string;
 }
 
 const StyledGame = withProps<any, HTMLDivElement>(styled.div)`
@@ -29,30 +28,36 @@ const OverlayContents = (props: {
   img: string,
   setNewPuzzle: () => void,
   time: number,
+  nextGame: string;
 }) => {
-  const { gameStatus, setGameStatus, img, setNewPuzzle, time } = props;
+  const { gameStatus, setGameStatus, img, setNewPuzzle, time, nextGame } = props;
   if (gameStatus === 'join')  {
     return <GameHome img={img} gameReady={() => setGameStatus('ready')}/>;
   }
   if (gameStatus === 'ready') {
-    return <GameReady img={img} gameStart={() => (setGameStatus('playing'), setNewPuzzle())}/>;
+    return <GameReady img={img} gameStart={() => (setGameStatus('playing'))}/>;
   }
   if (gameStatus === 'over') {
     return <GameOver gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
   }
   if (gameStatus === 'clear') {
-    return <GameClear time={time} gameReady={() => (setGameStatus('ready'), setNewPuzzle())}/>;
+    return <GameClear time={time} gameReady={() => (setGameStatus('ready'), setNewPuzzle())} nextGame={nextGame}/>;
   }
   return null;
 };
 
 const Game = (props: IProps) => {
-  const { img, columns, rows } = props;
+  const { games, step } = props;
+  const { columns, img, rows } = games[step];
   const [gameStatus, setGameStatus] = useState('join');
   const [puzzle, setPuzzle] = useState([]);
   const [time, setTime] = useState(0);
-  const startTime = new Date().getTime();
   const setNewPuzzle = () => setPuzzle(createPuzzle({ columns, rows }));
+  const nextGame = games.length > parseInt(step) + 1 ? `/?step=${parseInt(step) + 1}` : null;
+
+  useEffect(() => {
+    setNewPuzzle();
+  },        [step]);
 
   return (
     <StyledGame columns={columns} rows={rows}>
@@ -65,6 +70,7 @@ const Game = (props: IProps) => {
               img={img}
               setNewPuzzle={setNewPuzzle}
               time={time}
+              nextGame={nextGame}
             />
           </Overlay>
         )}

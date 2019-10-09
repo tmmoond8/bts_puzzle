@@ -11,10 +11,9 @@ const games = [
 ];
 
 const Index = (props: IProps) => {
-  const { router: { query: { id = 0 } } } = props;
-  const game = games[parseInt(id.toString())];
+  const { router: { query: { step = 0 } } } = props;
   return (
-    <Game {...game}/>
+    <Game games={games} step={step.toString()}/>
   );
 };
 export default withRouter(Index);
