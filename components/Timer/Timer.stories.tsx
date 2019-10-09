@@ -6,5 +6,5 @@ import Timer from  './Timer';
 
 storiesOf('Timer', module)
   .add('Timer', () => (
-    <Timer gameOver={action('game over')}/>
+    <Timer gameOver={action('game over')} time={44} setTime={action('set time')}/>
   ));

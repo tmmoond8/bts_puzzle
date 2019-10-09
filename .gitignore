@@ -1,6 +1,7 @@
 /node_modules
 /.next
 .env
+/out
 
 # Logs
 logs
@@ -8,7 +9,3 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# locking file
-package-lock.json
-yarn.lock

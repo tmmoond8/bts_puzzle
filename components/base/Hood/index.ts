@@ -1,1 +1,1 @@
-export { default } from './Hood';;
+export { default } from './Hood';

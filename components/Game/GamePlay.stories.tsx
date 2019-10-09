@@ -15,5 +15,5 @@ storiesOf('Game', module)
   )).add('GameHome', () => (
     <GameHome img="https://i.imgur.com/7bNfhgP.jpg" gameReady={action('game Ready')}/>
   )).add('Game', () => (
-    <Game img="https://i.imgur.com/7bNfhgP.jpg"/>
+    <Game img="https://i.imgur.com/7bNfhgP.jpg" columns={3} rows={4}/>
   ));
