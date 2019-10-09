@@ -2,13 +2,10 @@ import styled, { withProps } from '../../styles/themed-components';
 import { IPuzzlePiece } from '../Puzzle';
 
 const StyledPuzzlePiece = withProps<IPuzzlePiece, HTMLImageElement>(styled.img)`
-  height: 400px;
-  width: 300px;
+  ${({ theme, columns, rows }) => theme.puzzleSize(columns, rows)};
   transform: translate(-${props => props.x * props.size}px, -${props => props.y * props.size}px);
   object-fit: cover;
   ${({ theme }) => theme.media.phone`
-    width: 100vw;
-    height: 133.3vw;
     transform: translate(-${props => props.x * (100 / props.columns)}vw, -${props => props.y * (100 / props.columns)}vw);
   `}
 `;

@@ -38,7 +38,7 @@ const theme = {
     user-select: none;
     ${({ theme }) => theme.media.phone`
       width: 100vw;
-      height: 133.3vw;
+      height: ${100 + 100 / columns}vw;
     `}
   `,
 };
