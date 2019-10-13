@@ -15,7 +15,7 @@ const StyledTimer = styled.div`
 
 const Timer = (props: IProps) => {
   const { gameOver, time, setTime } = props;
-  const TIME_LIMIT = 60000;
+  const TIME_LIMIT = 100000;
   const [_time, _setTime] = useState(0);
   const [startTime, _] = useState(new Date().getTime());
 
@@ -23,7 +23,7 @@ const Timer = (props: IProps) => {
     const timer = setTimeout(() => {
       const currentTime = new Date().getTime();
       const pastTime = currentTime - startTime;
-      if (pastTime > 60000) {
+      if (pastTime > TIME_LIMIT) {
         gameOver();
       }
       setTime(pastTime);
